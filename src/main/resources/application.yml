@@ -1,3 +1,22 @@
 spring:
   application:
     name: registrAPI
+  profiles:
+    active: dev
+  mvc:
+    servlet:
+      path: /api/v1
+
+  datasource:
+    url: ${POSTGRES_DB_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+  port: 8080
