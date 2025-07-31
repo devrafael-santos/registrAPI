@@ -7,18 +7,19 @@ import com.raffasdev.registrapi.domain.model.EntityId;
 import com.raffasdev.registrapi.domain.model.User;
 import com.raffasdev.registrapi.domain.model.Username;
 import com.raffasdev.registrapi.domain.repository.UserRepository;
-import com.raffasdev.registrapi.infrastructure.persistence.jpa.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserApplicationService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    @Transactional
     public User registerUser(String username, String email, String password) {
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException(email);
@@ -28,8 +29,6 @@ public class UserService {
         }
 
         String encodedPassword = passwordEncoder.encode(password);
-
-        System.out.println("Encoded Password: " + encodedPassword);
 
         EntityId entityId = EntityId.newId();
 

@@ -27,7 +27,7 @@ class UserServiceTest {
     private UserRepository userRepositoryMock;
 
     @InjectMocks
-    private UserService userService;
+    private UserApplicationService userService;
 
     @Test
     @DisplayName("registerUser registers new user when valid data provided")
