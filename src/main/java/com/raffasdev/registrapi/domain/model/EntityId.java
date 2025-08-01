@@ -13,9 +13,6 @@ public class EntityId extends ValueObject {
     }
 
     public static EntityId of(UUID id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Entity ID cannot be null");
-        }
         return new EntityId(id);
     }
 
