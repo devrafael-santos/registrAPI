@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public final class UserMapper {
 
-    private UserMapper() {}
-
     public UserEntity toEntity(User user) {
         return UserEntity.create(
                 user.getId().getValue(),
