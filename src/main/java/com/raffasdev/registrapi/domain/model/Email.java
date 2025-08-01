@@ -32,7 +32,7 @@ public class Email extends ValueObject {
     }
 
     private void validate() {
-        if (email.isEmpty() || !EMAIL_PATTERN.matcher(email).matches()) {
+        if (email == null || !EMAIL_PATTERN.matcher(email).matches()) {
             throw new InvalidEmailException(email);
         }
     }

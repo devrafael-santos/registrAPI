@@ -3,16 +3,15 @@ package com.raffasdev.registrapi.domain.model;
 import com.raffasdev.registrapi.domain.exception.InvalidEmailException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmailTest {
 
     private final String validEmail = "teste@email.com";
-
-    private final String invalidEmail = "testeemail.com";
-
-    private final String blankEmail = "";
 
     @Test
     @DisplayName("of returns valid Email when valid email is Provided")
@@ -25,20 +24,6 @@ class EmailTest {
     }
 
     @Test
-    @DisplayName("of throws InvalidEmailException when invalid email is Provided")
-    void emailOf_ThrowsInvalidEmailException_WhenInvalidEmailIsProvided() {
-
-        assertThrows(InvalidEmailException.class, () -> Email.of(invalidEmail));
-    }
-
-    @Test
-    @DisplayName("of throws InvalidEmailException when empty email is Provided")
-    void emailOf_ThrowsInvalidEmailException_WhenEmptyEmailIsProvided() {
-
-        assertThrows(InvalidEmailException.class, () -> Email.of(blankEmail));
-    }
-
-    @Test
     @DisplayName("newEmail returns valid Email when valid email is Provided")
     void newEmail_ReturnsValidEmail_WhenValidEmailIsProvided() {
 
@@ -48,18 +33,13 @@ class EmailTest {
         assertEquals(validEmail, email.getValue());
     }
 
-    @Test
-    @DisplayName("newEmail throws InvalidEmailException when invalid email is Provided")
-    void newEmail_ThrowsInvalidEmailException_WhenInvalidEmailIsProvided() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"invalidemail", "email@.com", "@teste.com"})
+    @DisplayName("newEmail throws InvalidEmailException when invalid values are provided")
+    void newEmail_ThrowsInvalidEmailException_WhenInvalidValuesEmailAreProvided(String invalidEmail) {
 
         assertThrows(InvalidEmailException.class, () -> Email.newEmail(invalidEmail));
-    }
-
-    @Test
-    @DisplayName("newEmail throws InvalidEmailException when empty email is Provided")
-    void newEmail_ThrowsInvalidEmailException_WhenEmptyEmailIsProvided() {
-
-        assertThrows(InvalidEmailException.class, () -> Email.newEmail(blankEmail));
     }
 
     @Test
