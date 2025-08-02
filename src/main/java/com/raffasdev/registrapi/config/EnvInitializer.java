@@ -15,7 +15,7 @@ public class EnvInitializer implements ApplicationContextInitializer<Configurabl
                 .load();
 
         Dotenv env = Dotenv.configure()
-                .filename(".env." + baseEnv.get("ENVIRONMENT", "env") + ".local")
+                .filename(".env." + baseEnv.get("ENVIRONMENT", "dev") + ".local")
                 .ignoreIfMissing()
                 .load();
 

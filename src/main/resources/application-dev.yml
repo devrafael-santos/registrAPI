@@ -8,3 +8,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  session:
+    jdbc:
+      initialize-schema: always
+    store-type: jdbc
