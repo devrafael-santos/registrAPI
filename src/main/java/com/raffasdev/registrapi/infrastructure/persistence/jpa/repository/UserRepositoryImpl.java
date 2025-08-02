@@ -2,7 +2,6 @@ package com.raffasdev.registrapi.infrastructure.persistence.jpa.repository;
 
 import com.raffasdev.registrapi.domain.model.User;
 import com.raffasdev.registrapi.domain.repository.UserRepository;
-import com.raffasdev.registrapi.infrastructure.persistence.jpa.entity.UserEntity;
 import com.raffasdev.registrapi.infrastructure.persistence.jpa.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,12 +16,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-
-        UserEntity userEntity = userMapper.toEntity(user);
-
-        UserEntity savedUserEntity = jpaRepository.save(userEntity);
-
-        return userMapper.toDomain(savedUserEntity);
+        return userMapper.toDomain(jpaRepository.save(userMapper.toEntity(user)));
     }
 
     @Override

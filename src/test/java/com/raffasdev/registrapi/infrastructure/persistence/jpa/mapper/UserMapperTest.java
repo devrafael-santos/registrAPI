@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 class UserMapperTest {
@@ -25,8 +24,8 @@ class UserMapperTest {
     }
 
     @Test
-    @DisplayName("toEntity should map all fields from User to UserEntity correctly")
-    void toEntity_shouldMapAllFields_fromDomainToEntity() {
+    @DisplayName("toEntity maps all fields from User to UserEntity when successful")
+    void toEntity_MapsAllFieldsFromUserToUserEntity_WhenSuccessful() {
 
         var id = EntityId.newId();
         User userDomain = User.create(
@@ -46,8 +45,8 @@ class UserMapperTest {
     }
 
     @Test
-    @DisplayName("toDomain should map all fields from UserEntity to User correctly")
-    void toDomain_shouldMapAllFields_fromEntityToDomain() {
+    @DisplayName("toDomain maps all fields from UserEntity to User when successful")
+    void toDomain_MapsAllFieldsFromEntityToDomain_WhenSuccessful() {
 
         var id = EntityId.newId().getValue();
         UserEntity userEntity = UserEntity.create(
@@ -64,5 +63,14 @@ class UserMapperTest {
         assertEquals("test", resultDomain.getUsername());
         assertEquals("test@gmail.com", resultDomain.getEmail());
         assertEquals("encodedPassword123", resultDomain.getEncodedPassword());
+    }
+
+    @Test
+    @DisplayName("toDomain returns null when UserEntity null are provided")
+    void toDomain_ReturnsNull_WhenUserEntityNullAreProvided() {
+
+        UserEntity userEntity = null;
+
+        assertNull(userMapper.toDomain(userEntity));
     }
 }
