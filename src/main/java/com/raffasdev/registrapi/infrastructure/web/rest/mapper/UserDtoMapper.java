@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public final class UserDtoMapper {
 
-    private UserDtoMapper() {}
-
     public RegisterUserResponse toRegisterUserResponse(User user) {
         return new RegisterUserResponse(
                 user.getUsername(),
