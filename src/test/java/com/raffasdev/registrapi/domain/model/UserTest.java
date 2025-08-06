@@ -20,7 +20,7 @@ class UserTest {
         Email email = Email.newEmail("test@test.com");
         encodedPassword = "encodedPassword123";
         user = User.create(id, username, email, encodedPassword);
-        reconstitutedUser = User.reconstitue(id, username, email, encodedPassword);
+        reconstitutedUser = User.reconstitute(id, username, email, encodedPassword);
     }
 
     @Test
