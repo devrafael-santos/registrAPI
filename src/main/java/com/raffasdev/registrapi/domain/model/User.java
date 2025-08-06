@@ -17,7 +17,7 @@ public class User extends Entity<EntityId> {
         return new User(id, username, email, encodedPassword);
     }
 
-    public static User reconstitue(EntityId id, Username username, Email email, String encodedPassword) {
+    public static User reconstitute(EntityId id, Username username, Email email, String encodedPassword) {
         return new User(id, username, email, encodedPassword);
     }
 

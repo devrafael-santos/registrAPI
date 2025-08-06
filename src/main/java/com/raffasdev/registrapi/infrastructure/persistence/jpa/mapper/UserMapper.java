@@ -23,7 +23,7 @@ public final class UserMapper {
         if (entity == null) {
             return null;
         }
-        return User.reconstitue(
+        return User.reconstitute(
                 EntityId.of(entity.getUserId()),
                 Username.of(entity.getUsername()),
                 Email.of(entity.getEmail()),

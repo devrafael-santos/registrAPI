@@ -44,7 +44,7 @@ class UserRepositoryImplTest {
         UserEntity userEntityToSave = new UserEntity();
         UserEntity savedUserEntity = new UserEntity();
 
-        User expectedSavedUser = User.reconstitue(
+        User expectedSavedUser = User.reconstitute(
                 id,
                 Username.newUsername("test"),
                 Email.newEmail("test@email.com"),
