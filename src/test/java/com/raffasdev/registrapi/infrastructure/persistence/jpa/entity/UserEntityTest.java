@@ -22,7 +22,7 @@ class UserEntityTest {
         assertNotNull(userEntity);
         assertNotNull(userEntity.getUserId());
         assertEquals("test", userEntity.getUsername());
-        assertEquals("test@gmail.com" , userEntity.getEmail());
+        assertEquals("test@gmail.com", userEntity.getEmail());
         assertEquals("password123", userEntity.getPassword());
     }
 

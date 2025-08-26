@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SecurityFilterTest {
@@ -51,9 +51,9 @@ class SecurityFilterTest {
         String userEmail = "teste@email.com";
         UserEntity userEntity = UserEntityCreator.createEntity();
 
-        when(requestMock.getHeader("Authorization")).thenReturn("Bearer " + token);
-        when(tokenServiceMock.validateToken(token)).thenReturn(userEmail);
-        when(userRepositoryMock.findByEmail(userEmail)).thenReturn(Optional.of(userEntity));
+        given(requestMock.getHeader("Authorization")).willReturn("Bearer " + token);
+        given(tokenServiceMock.validateToken(token)).willReturn(userEmail);
+        given(userRepositoryMock.findByEmail(userEmail)).willReturn(Optional.of(userEntity));
 
         securityFilter.doFilterInternal(requestMock, responseMock, filterChainMock);
 
@@ -69,8 +69,8 @@ class SecurityFilterTest {
     void doFilterInternal_DoesNotSetAuthentication_whenTokenIsInvalid() throws ServletException, IOException {
 
         String token = "invalid.jwt.token";
-        when(requestMock.getHeader("Authorization")).thenReturn("Bearer " + token);
-        when(tokenServiceMock.validateToken(token)).thenReturn(null);
+        given(requestMock.getHeader("Authorization")).willReturn("Bearer " + token);
+        given(tokenServiceMock.validateToken(token)).willReturn(null);
 
         securityFilter.doFilterInternal(requestMock, responseMock, filterChainMock);
 

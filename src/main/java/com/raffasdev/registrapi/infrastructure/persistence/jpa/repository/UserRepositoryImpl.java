@@ -6,6 +6,8 @@ import com.raffasdev.registrapi.infrastructure.persistence.jpa.mapper.UserMapper
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
@@ -22,6 +24,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean existsByEmail(String email) {
         return jpaRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userMapper.toOptionalDomain(jpaRepository.findByEmail(email));
     }
 
     @Override

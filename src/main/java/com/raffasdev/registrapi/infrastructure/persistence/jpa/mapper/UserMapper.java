@@ -7,6 +7,8 @@ import com.raffasdev.registrapi.domain.model.Username;
 import com.raffasdev.registrapi.infrastructure.persistence.jpa.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public final class UserMapper {
 
@@ -28,6 +30,22 @@ public final class UserMapper {
                 Username.of(entity.getUsername()),
                 Email.of(entity.getEmail()),
                 entity.getPassword()
+        );
+    }
+
+    public Optional<User> toOptionalDomain(Optional<UserEntity> optionalEntity) {
+        if (optionalEntity.isEmpty()) {
+            return  Optional.empty();
+        }
+        UserEntity userEntity = optionalEntity.get();
+
+        return Optional.of(
+                User.reconstitute(
+                        EntityId.of(userEntity.getUserId()),
+                        Username.of(userEntity.getUsername()),
+                        Email.of(userEntity.getEmail()),
+                        userEntity.getPassword()
+                )
         );
     }
 }

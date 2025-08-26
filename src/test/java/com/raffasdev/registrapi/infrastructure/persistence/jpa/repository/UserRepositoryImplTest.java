@@ -14,7 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class UserRepositoryImplTest {
@@ -51,9 +53,9 @@ class UserRepositoryImplTest {
                 "encodedPassword"
         );
 
-        when(userMapperMock.toEntity(userToSave)).thenReturn(userEntityToSave);
-        when(jpaRepositoryMock.save(userEntityToSave)).thenReturn(savedUserEntity);
-        when(userMapperMock.toDomain(savedUserEntity)).thenReturn(expectedSavedUser);
+        given(userMapperMock.toEntity(userToSave)).willReturn(userEntityToSave);
+        given(jpaRepositoryMock.save(userEntityToSave)).willReturn(savedUserEntity);
+        given(userMapperMock.toDomain(savedUserEntity)).willReturn(expectedSavedUser);
 
         User actualSavedUser = userRepositoryImpl.save(userToSave);
 
@@ -69,7 +71,7 @@ class UserRepositoryImplTest {
     @DisplayName("existsByEmail returns true when email exists")
     void existsByEmail_returnsTrue_whenEmailExists() {
         String email = "test@email.com";
-        when(jpaRepositoryMock.existsByEmail(email)).thenReturn(true);
+        given(jpaRepositoryMock.existsByEmail(email)).willReturn(true);
 
         boolean result = userRepositoryImpl.existsByEmail(email);
 
@@ -81,7 +83,7 @@ class UserRepositoryImplTest {
     @DisplayName("existsByEmail returns false when email does not exists")
     void existsByEmail_returnsFalse_whenEmailDoesNotExist() {
         String email = "test@email.com";
-        when(jpaRepositoryMock.existsByEmail(email)).thenReturn(false);
+        given(jpaRepositoryMock.existsByEmail(email)).willReturn(false);
 
         boolean result = userRepositoryImpl.existsByEmail(email);
 
@@ -93,7 +95,7 @@ class UserRepositoryImplTest {
     @DisplayName("existsByUsername returns true when username exists")
     void existsByUsername_returnsTrue_whenUsernameExists() {
         String username = "test";
-        when(jpaRepositoryMock.existsByUsername(username)).thenReturn(true);
+        given(jpaRepositoryMock.existsByUsername(username)).willReturn(true);
 
         boolean result = userRepositoryImpl.existsByUsername(username);
 
@@ -105,7 +107,7 @@ class UserRepositoryImplTest {
     @DisplayName("existsByUsername returns false when username does not exists")
     void existsByUsername_returnsFalse_whenUsernameDoesNotExist() {
         String username = "test";
-        when(jpaRepositoryMock.existsByUsername(username)).thenReturn(false);
+        given(jpaRepositoryMock.existsByUsername(username)).willReturn(false);
 
         boolean result = userRepositoryImpl.existsByUsername(username);
 
