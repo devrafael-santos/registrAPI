@@ -7,22 +7,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.Instant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TokenServiceTest {
-
-    @Mock
-    private UserDetails userDetailsMock;
 
     @InjectMocks
     private TokenService tokenService;
@@ -41,9 +35,8 @@ class TokenServiceTest {
     void generateToken_returnsValidJwt_whenUserIsValid() {
 
         String userEmail = "teste@email.com";
-        when(userDetailsMock.getUsername()).thenReturn(userEmail);
 
-        String token = tokenService.generateToken(userDetailsMock);
+        String token = tokenService.generateToken(userEmail);
 
         assertThat(token).isNotNull().isNotEmpty();
 
@@ -61,8 +54,7 @@ class TokenServiceTest {
     void validateToken_returnsSubject_whenTokenIsValid() {
 
         String userEmail = "teste@email.com";
-        when(userDetailsMock.getUsername()).thenReturn(userEmail);
-        String validToken = tokenService.generateToken(userDetailsMock);
+        String validToken = tokenService.generateToken(userEmail);
 
         String subject = tokenService.validateToken(validToken);
 
@@ -104,9 +96,11 @@ class TokenServiceTest {
     @DisplayName("generateToken throws RuntimeException for JWTCreationException")
     void generateToken_throwsRuntimeException_whenCreationFails() {
 
+        String userEmail = "teste@email.com";
+
         ReflectionTestUtils.setField(tokenService, "secretKey", null);
 
-        assertThatThrownBy(() -> tokenService.generateToken(userDetailsMock))
+        assertThatThrownBy(() -> tokenService.generateToken(userEmail))
                 .isInstanceOf(RuntimeException.class);
     }
 }

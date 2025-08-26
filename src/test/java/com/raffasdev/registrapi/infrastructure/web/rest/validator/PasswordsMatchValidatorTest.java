@@ -12,7 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class PasswordsMatchValidatorTest {
@@ -48,8 +50,8 @@ class PasswordsMatchValidatorTest {
     @DisplayName("isValid returns false when passwords do not match")
     void isValid_ReturnsFalse_WhenPasswordsDoNotMatch() {
 
-        when(contextMock.buildConstraintViolationWithTemplate(ArgumentMatchers.anyString())).thenReturn(violationBuilderMock);
-        when(violationBuilderMock.addPropertyNode(ArgumentMatchers.anyString())).thenReturn(nodeBuilderMock);
+        given(contextMock.buildConstraintViolationWithTemplate(ArgumentMatchers.anyString())).willReturn(violationBuilderMock);
+        given(violationBuilderMock.addPropertyNode(ArgumentMatchers.anyString())).willReturn(nodeBuilderMock);
 
         var request = new RegisterUserRequest(
                 "user",
