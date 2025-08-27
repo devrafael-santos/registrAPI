@@ -1,6 +1,7 @@
 package com.raffasdev.registrapi.application.service;
 
 import com.raffasdev.registrapi.application.exception.EmailAlreadyExistsException;
+import com.raffasdev.registrapi.application.exception.UserNotFoundException;
 import com.raffasdev.registrapi.application.exception.UsernameAlreadyExistsException;
 import com.raffasdev.registrapi.domain.model.Email;
 import com.raffasdev.registrapi.domain.model.EntityId;
@@ -40,6 +41,11 @@ public class UserApplicationService {
         );
 
         return userRepository.save(user);
+    }
+
+    public User getUserProfile(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(email));
     }
 
 }
